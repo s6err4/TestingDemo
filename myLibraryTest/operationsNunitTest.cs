@@ -51,6 +51,8 @@ namespace myLibrary
             double result = operations.AddDecima(number1, number2);
 
             Assert.That(result, Is.EqualTo(3.4).Within(0.1));
+
+
         }
     }
 }

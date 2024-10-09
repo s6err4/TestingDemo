@@ -54,5 +54,39 @@ namespace myLibrary
 
 
         }
+        [Test]
+        [TestCase(0, 10)]
+        public void GetEvenNumbers_InputRange_ReturnEvenNumbers(int start, int end)
+        {
+            // 1. Arrange
+            operations operations = new();
+            int startNumber = start % 2 == 0 ? start : start + 1;
+            int endNumber = end % 2 == 0 ? end : end - 1;
+            int middleNumber = (start + end) / 2;
+            middleNumber = middleNumber % 2 == 0 ? middleNumber : middleNumber + 1;
+
+
+            // 2. Act
+            IList<int> result = operations.GetEvenNumbers(start, end);
+
+            // 3. Assert
+            Assert.That(start < end, Is.True);
+            Assert.That(result, Is.Not.Empty);
+            Assert.That(result[0], Is.TypeOf<int>());
+
+            // Comprobaciones sobre los elementos
+            Assert.That(result, Is.Ordered);
+            Assert.That(result, Has.No.Member(-1));
+
+            // Asegúrate de que los números están dentro del rango esperado
+            Assert.That(result, Has.All.InRange(start, end));
+            Assert.That(result, Has.All.GreaterThanOrEqualTo(0));
+            Assert.That(result, Has.All.LessThanOrEqualTo(end));
+            Assert.That(result, Is.Unique);
+
+            Assert.That(result, Has.No.All.LessThan(startNumber));
+            Assert.That(result, Has.Member(startNumber));
+            Assert.That(result, Has.Member(middleNumber));
+        }
     }
 }
